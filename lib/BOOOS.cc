@@ -10,6 +10,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+#include <Scheduler.h>
 
 namespace BOOOS {
 
@@ -31,6 +32,7 @@ BOOOS::BOOOS(bool verbose) : _verbose(verbose) {
 	// Call init routines of other components
 
 	Task::init();
+	Scheduler::init();
 }
 
 BOOOS::~BOOOS() {
