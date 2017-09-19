@@ -66,7 +66,7 @@ namespace Scheduler_Test_Functions {
 		delete t3;
 		delete t4;
 
-		Task::self()->exit(0);
+		//Task::self()->exit(0);
 
 		return 0;
 	}

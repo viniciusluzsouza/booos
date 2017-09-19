@@ -38,7 +38,6 @@ void Scheduler::init(){
 //Método despachador (determina a proxima tarefa a executar)
 void Scheduler::dispatcher(void*){
 	while (__ready.size() > 0){
-		if (Task::__last_task and Task::__last_task->state() == READY) __ready.push(__last_task);
 		Task * next = self()->choose_next();
 		if (next){
 			self()->pass_to(next, SCHEDULER);

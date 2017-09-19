@@ -21,8 +21,6 @@ const int Task::STACKSIZE;
 Task * Task::__main;
 std::queue<Task*> Task::__ready;
 int Task::_count=0;
-Task * Task::__last_task;
-
 
 
 //...
@@ -36,7 +34,8 @@ Task::Task(void (*entry_point)(void*), int nargs, void * arg){
 		this->_context.uc_stack.ss_sp = _stack;
 		this->_context.uc_stack.ss_size = STACKSIZE;
 		this->_context.uc_stack.ss_flags = 0;
-		this->_context.uc_link = 0;
+		//this->_context.uc_link = 0;
+		this->_context.uc_link = (ucontext*)-1;
 	} else {
 		exit(1);
 	}
@@ -61,8 +60,7 @@ Task::~Task(){
 void Task::pass_to(Task * t, State s){
 	this->_state = s;
 	__running = t;
-	if (s != FINISHING) __last_task = this;
-	else __last_task = NULL;
+	if (s == READY) __ready.push(this);
 	swapcontext(&this->_context, &t->_context);
 
 }

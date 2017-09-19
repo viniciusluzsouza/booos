@@ -56,7 +56,6 @@ private:
 	State _state;
 	int _tid; // task ID
 
-	static Task * __last_task;
 	static Task * __main;
 };
 

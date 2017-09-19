@@ -57,7 +57,7 @@ namespace Task_Test_Functions {
 		return 0;
 	}
 
-	Task *ping, *pong;
+	Task *ping, *pong, *Main;
 	queue<string> log,correct;
 
 	void f_ping(void * arg) {
@@ -78,7 +78,7 @@ namespace Task_Test_Functions {
 		str2 << (char *) arg << " End" << endl;
 		log.push(str2.str());
 
-		ping->exit(0);
+		ping->pass_to(Main);
 	}
 
 	void f_pong(void * arg) {
@@ -102,7 +102,7 @@ namespace Task_Test_Functions {
 		log.push(str2.str());
 		str2.str().clear();
 
-		pong->exit(0);
+		pong->pass_to(Main);
 	}
 
 	int test_cooperative_execution()
@@ -130,6 +130,7 @@ namespace Task_Test_Functions {
 		ping = new Task(f_ping, 1, (char*)"\tPing");
 		pong = new Task(f_pong, 1, (char*)"\tPong");
 
+		Main = Task::self();
 		Task::self()->pass_to(ping);
 		Task::self()->pass_to(pong);
 
